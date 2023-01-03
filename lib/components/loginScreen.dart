@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -8,6 +9,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  _LoginScreenState() {
+    _selectedUserType = _UserType[0];
+  }
+
+  // ignore: non_constant_identifier_names
+  final _UserType = ['Vehical Owner', 'Filling Station Owner'];
+  String _selectedUserType = "";
+
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.brown.shade200,
@@ -16,11 +25,17 @@ class _LoginScreenState extends State<LoginScreen> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               // welcome back
-              const Text(
+              const Icon(
+                Icons.directions_car_filled,
+                size: 150,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
                 "Login",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
+                style: GoogleFonts.bebasNeue(
+                  fontSize: 52,
                 ),
               ),
               const SizedBox(
@@ -37,6 +52,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 50,
               ),
 
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: DropdownButtonFormField(
+                  value: _selectedUserType,
+                  items: _UserType.map((e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(e),
+                      )).toList(),
+                  onChanged: (val) {
+                    setState(() {
+                      _selectedUserType = val as String;
+                    });
+                  },
+                  icon: const Icon(Icons.arrow_drop_down_circle_outlined,
+                      color: Colors.brown),
+                  dropdownColor: Colors.brown[50],
+                  decoration: const InputDecoration(labelText: "Vehical Type"),
+                ),
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
               //username
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -49,9 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: EdgeInsets.only(left: 20.0),
                     child: TextField(
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Username',
-                      ),
+                          border: InputBorder.none,
+                          hintText: 'Enter Your Username',
+                          labelText: 'Username'),
                     ),
                   ),
                 ),
@@ -74,7 +113,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       obscureText: true,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Password',
+                        hintText: 'Enter your Password',
+                        labelText: 'Password',
                       ),
                     ),
                   ),
