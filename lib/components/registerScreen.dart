@@ -123,7 +123,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   icon: const Icon(Icons.arrow_drop_down_circle_outlined,
                       color: Colors.brown),
                   dropdownColor: Colors.brown[50],
-                  decoration: const InputDecoration(labelText: "Vehical Type"),
+                  decoration: const InputDecoration(
+                    labelText: "Vehical Type",
+                    prefixIcon: Icon(Icons.car_crash_rounded),
+                  ),
                 ),
               ),
 
