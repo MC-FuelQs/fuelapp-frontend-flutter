@@ -72,7 +72,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   icon: const Icon(Icons.arrow_drop_down_circle_outlined,
                       color: Colors.brown),
                   dropdownColor: Colors.brown[50],
-                  decoration: const InputDecoration(labelText: "Vehical Type"),
+                  decoration: const InputDecoration(
+                    labelText: "Vehical Type",
+                    prefixIcon: Icon(Icons.supervised_user_circle),
+                  ),
                 ),
               ),
 
@@ -88,13 +91,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.grey.shade200,
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12)),
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 20.0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Name',
-                          labelText: 'Name'),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Name',
+                      labelText: 'Name',
+                      prefixIcon: Icon(Icons.verified_user),
                     ),
                   ),
                 ),
@@ -137,13 +139,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.grey.shade200,
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12)),
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 20.0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Enter a unique Username',
-                          labelText: 'Username'),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Enter a unique Username',
+                      labelText: 'Username',
+                      prefixIcon: Icon(Icons.person_rounded),
                     ),
                   ),
                 ),
@@ -160,14 +161,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.grey.shade200,
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12)),
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 20.0),
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Password',
-                          labelText: 'Password'),
+                  child: const TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Password',
+                      labelText: 'Password',
+                      prefixIcon: Icon(Icons.password_rounded),
                     ),
                   ),
                 ),
