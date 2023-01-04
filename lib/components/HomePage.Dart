@@ -13,8 +13,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Custom Button"),
-          backgroundColor: Colors.purple,
+          title: Text("Home Page"),
+          backgroundColor: Colors.brown,
         ),
         body: Container(
           color: Colors.grey.shade300,
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.purple,
+                            color: Colors.brown,
                             spreadRadius: 1,
                             blurRadius: 8,
                             offset: Offset(4, 4),
@@ -51,11 +51,11 @@ class _HomePageState extends State<HomePage> {
                         ]),
                     child: const Center(
                       child: Text(
-                        "Check",
+                        "Check all stations",
                         style: TextStyle(
-                          color: Colors.purple,
+                          color: Colors.brown,
                           fontWeight: FontWeight.bold,
-                          fontSize: 36,
+                          fontSize: 28,
                         ),
                       ),
                     ),
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                           
                           boxShadow: const [
                             BoxShadow(
-                              color: Colors.purple,
+                              color: Colors.brown,
                               spreadRadius: 1,
                               blurRadius: 8,
                               offset: Offset(4, 4),
@@ -94,11 +94,11 @@ class _HomePageState extends State<HomePage> {
                           ]),
                       child: const Center(
                         child: Text(
-                          "Enterd Station",
+                          "Entered a station",
                           style: TextStyle(
-                            color: Colors.purple,
+                            color: Colors.brown,
                             fontWeight: FontWeight.bold,
-                            fontSize: 36,
+                            fontSize: 28,
                           ),
                         ),
                       ),
