@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +12,8 @@ class MySheds extends StatefulWidget {
 }
 
 class _MyShedsState extends State<MySheds> {
+  String token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaGVkT3duZXJJZCI6IjYzYjVlOWZiM2ViYTRhNjdkN2VjNTY4ZiIsImlhdCI6MTY3Mjg2NjM1OSwiZXhwIjoxNjcyOTUyNzU5fQ.-IWQrFNIGY4Zo-qxYpIUsKj6z6Lw4KvEH-b43XuzHzQ";
   var sheds = [];
   bool isShedsLoading = true;
 
@@ -24,13 +27,17 @@ class _MyShedsState extends State<MySheds> {
   }
 
   fetchSheds() async {
-    var url = 'https://jsonplaceholder.typicode.com/users';
-    var response = await http.get(Uri.parse(url));
+    var url = 'http://localhost:3000/api/shed/list';
+    var response = await http.get(Uri.parse(url), headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    });
     print(response.statusCode);
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
       setState(() {
         sheds = items;
+        print(sheds);
       });
     } else {
       setState(() {
@@ -51,7 +58,7 @@ class _MyShedsState extends State<MySheds> {
   }
 
   Widget getCard(item) {
-    var shedName = item['name'];
+    var shedName = item['shedName'];
     return Card(
       child: ListTile(
           title: Row(
