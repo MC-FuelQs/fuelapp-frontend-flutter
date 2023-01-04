@@ -53,11 +53,11 @@ class _MyShedsState extends State<MySheds> {
     return ListView.builder(
         itemCount: sheds.length,
         itemBuilder: (context, index) {
-          return getCard(sheds[index]);
+          return getCard(sheds[index], index);
         });
   }
 
-  Widget getCard(item) {
+  Widget getCard(item, index) {
     var shedName = item['shedName'];
     return Card(
       child: ListTile(
@@ -75,10 +75,10 @@ class _MyShedsState extends State<MySheds> {
             onChanged: (bool s) {
               setState(() {
                 print(s);
-                _state = s;
+                sheds[index]['availability'] = s;
               });
             },
-            value: _state,
+            value: sheds[index]['availability'],
             activeColor: Colors.black,
             activeTrackColor: Colors.green,
             inactiveTrackColor: Colors.deepOrange,
