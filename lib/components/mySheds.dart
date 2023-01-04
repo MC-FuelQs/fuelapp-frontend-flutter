@@ -45,9 +45,20 @@ class _MyShedsState extends State<MySheds> {
       });
     }
   }
-  //-----
 
-  bool _state = false;
+  updateShedAvailability(bool status, String shedId) async {
+    print(shedId.toString() + " changed to - " + status.toString());
+    var url = 'http://localhost:3000/api/shed/$shedId';
+    var response = await http.put(
+      Uri.parse(url),
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token"
+      },
+      body: jsonEncode(<String, bool>{'availability': status}),
+    );
+  }
+  //-----
 
   Widget getBody() {
     return ListView.builder(
@@ -72,10 +83,10 @@ class _MyShedsState extends State<MySheds> {
           ),
           Text(shedName),
           Switch(
-            onChanged: (bool s) {
+            onChanged: (bool status) {
               setState(() {
-                print(s);
-                sheds[index]['availability'] = s;
+                updateShedAvailability(status, sheds[index]['_id']);
+                sheds[index]['availability'] = status;
               });
             },
             value: sheds[index]['availability'],
