@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class MySheds extends StatefulWidget {
@@ -12,8 +13,12 @@ class MySheds extends StatefulWidget {
 }
 
 class _MyShedsState extends State<MySheds> {
-  String token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaGVkT3duZXJJZCI6IjYzYjVlOWZiM2ViYTRhNjdkN2VjNTY4ZiIsImlhdCI6MTY3Mjg2NjM1OSwiZXhwIjoxNjcyOTUyNzU5fQ.-IWQrFNIGY4Zo-qxYpIUsKj6z6Lw4KvEH-b43XuzHzQ";
+  // ----- temp
+  String token = dotenv.get('jwttoken',
+      fallback:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaGVkT3duZXJJZCI6IjYzYjVlOWZiM2ViYTRhNjdkN2VjNTY4ZiIsImlhdCI6MTY3Mjg2NjM1OSwiZXhwIjoxNjcyOTUyNzU5fQ.-IWQrFNIGY4Zo-qxYpIUsKj6z6Lw4KvEH-b43XuzHzQ');
+
+  String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
   String username = "madawa";
   var sheds = [];
   bool isShedsLoading = true;
@@ -28,7 +33,7 @@ class _MyShedsState extends State<MySheds> {
   }
 
   fetchSheds() async {
-    var url = 'http://localhost:3000/api/shed/list';
+    var url = '$API_URL/api/shed/list';
     var response = await http.get(Uri.parse(url), headers: {
       HttpHeaders.contentTypeHeader: "application/json",
       HttpHeaders.authorizationHeader: "Bearer $token"
@@ -48,7 +53,7 @@ class _MyShedsState extends State<MySheds> {
 
   updateShedAvailability(bool status, String shedId) async {
     print(shedId.toString() + " changed to - " + status.toString());
-    var url = 'http://localhost:3000/api/shed/$shedId';
+    var url = '$API_URL/api/shed/$shedId';
     var response = await http.put(
       Uri.parse(url),
       headers: {

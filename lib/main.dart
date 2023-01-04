@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fuel_app/components/loginScreen.dart';
 import 'package:fuel_app/components/mySheds.dart';
 import 'package:fuel_app/components/registerScreen.dart';
 import 'package:fuel_app/components/homePage.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
+
   runApp(const MyApp());
 }
 
