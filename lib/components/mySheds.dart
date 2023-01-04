@@ -14,6 +14,7 @@ class MySheds extends StatefulWidget {
 class _MyShedsState extends State<MySheds> {
   String token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaGVkT3duZXJJZCI6IjYzYjVlOWZiM2ViYTRhNjdkN2VjNTY4ZiIsImlhdCI6MTY3Mjg2NjM1OSwiZXhwIjoxNjcyOTUyNzU5fQ.-IWQrFNIGY4Zo-qxYpIUsKj6z6Lw4KvEH-b43XuzHzQ";
+  String username = "madawa";
   var sheds = [];
   bool isShedsLoading = true;
 
@@ -36,8 +37,7 @@ class _MyShedsState extends State<MySheds> {
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
       setState(() {
-        sheds = items;
-        print(sheds);
+        sheds = items.where((c) => c['owner'] == username).toList();
       });
     } else {
       setState(() {
