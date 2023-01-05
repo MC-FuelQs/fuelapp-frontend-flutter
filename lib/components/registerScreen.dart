@@ -166,32 +166,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
               // vehical type
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: DropdownButtonFormField(
-                  value: _selectedVehicalType,
-                  items: _VehicalType.map((e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(e),
-                      )).toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _selectedVehicalType = val as String;
-                    });
-                  },
-                  icon: const Icon(Icons.arrow_drop_down_circle_outlined,
-                      color: Colors.brown),
-                  dropdownColor: Colors.brown[50],
-                  decoration: const InputDecoration(
-                    labelText: "Vehical Type",
-                    prefixIcon: Icon(Icons.car_crash_rounded),
-                  ),
-                ),
-              ),
-
-              const SizedBox(
-                height: 10,
-              ),
+              Container(
+                  child: _selectedUserType == 'Vehical Owner'
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                          child: Column(
+                            children: [
+                              DropdownButtonFormField(
+                                value: _selectedVehicalType,
+                                items: _VehicalType.map((e) => DropdownMenuItem(
+                                      value: e,
+                                      child: Text(e),
+                                    )).toList(),
+                                onChanged: (val) {
+                                  setState(() {
+                                    _selectedVehicalType = val as String;
+                                  });
+                                },
+                                icon: const Icon(
+                                    Icons.arrow_drop_down_circle_outlined,
+                                    color: Colors.brown),
+                                dropdownColor: Colors.brown[50],
+                                decoration: const InputDecoration(
+                                  labelText: "Vehical Type",
+                                  prefixIcon: Icon(Icons.car_crash_rounded),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        )
+                      : const SizedBox(
+                          width: 0,
+                        )),
 
               //username
               Padding(
