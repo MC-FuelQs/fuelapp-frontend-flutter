@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fuel_app/components/loginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
@@ -69,6 +70,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (response.statusCode == 200) {
       var res_body = json.decode(response.body);
       print(res_body);
+
+      await Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const LoginScreen()));
     } else {
       print("Failed to register");
     }
@@ -292,9 +296,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('Already have an account?'),
-                  Text(
-                    ' Sign in',
-                    style: TextStyle(color: Colors.blue.shade600),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
+                    },
+                    child: Text(
+                      ' Sign in',
+                      style: TextStyle(color: Colors.blue.shade600),
+                    ),
                   ),
                 ],
               )

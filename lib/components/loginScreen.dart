@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fuel_app/components/homePage.dart';
 import 'package:fuel_app/components/mySheds.dart';
+import 'package:fuel_app/components/registerScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
         HttpHeaders.contentTypeHeader: "application/json",
       },
       body: jsonEncode(
-          <String, String>{'username': username, 'password': password}),
+          <String, String>{'userName': username, 'password': password}),
     );
     print(response.statusCode);
     if (response.statusCode == 200) {
@@ -237,9 +238,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('Not a member?'),
-                  Text(
-                    ' Register',
-                    style: TextStyle(color: Colors.blue.shade600),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const RegisterScreen()));
+                    },
+                    child: Text(
+                      ' Register',
+                      style: TextStyle(color: Colors.blue.shade600),
+                    ),
                   ),
                 ],
               )
