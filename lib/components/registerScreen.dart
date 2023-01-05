@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -14,11 +19,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _selectedUserType = _UserType[0];
   }
   // ignore: non_constant_identifier_names
-  final _VehicalType = ['Petrol', 'Desel'];
+  final _VehicalType = ['Petrol', 'Diesel'];
   String _selectedVehicalType = "";
 
   final _UserType = ['Vehical Owner', 'Filling Station Owner'];
   String _selectedUserType = "";
+
+  String username = "";
+  String password = "";
+  String name = "";
+
+  String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
+
+  registerUser(String name, String username, String password,
+      String selectedUserType, String selectedVehicalType) async {
+    print("Provided cerd : " +
+        name.toString() +
+        " " +
+        username.toString() +
+        " " +
+        selectedUserType.toString() +
+        " " +
+        selectedVehicalType.toString() +
+        " " +
+        password.toString());
+
+    var url = '';
+    if (selectedUserType == 'Filling Station Owner') {
+      url = '$API_URL/api/shedown/register';
+    } else if (selectedUserType == 'Vehical Owner') {
+      url = '$API_URL/api/vehiown/register';
+    } else {
+      print('unknown user type');
+    }
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+      },
+      body: jsonEncode(<String, String>{
+        'userName': username,
+        'password': password,
+        'name': name,
+        'vehiType': selectedVehicalType
+      }),
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      var res_body = json.decode(response.body);
+      print(res_body);
+    } else {
+      print("Failed to register");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +145,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.grey.shade200,
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12)),
-                  child: const TextField(
-                    decoration: InputDecoration(
+                  child: TextField(
+                    onChanged: (val) {
+                      setState(() {
+                        name = val;
+                      });
+                    },
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Name',
                       labelText: 'Name',
@@ -142,8 +201,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.grey.shade200,
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12)),
-                  child: const TextField(
-                    decoration: InputDecoration(
+                  child: TextField(
+                    onChanged: (val) {
+                      setState(() {
+                        username = val;
+                      });
+                    },
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Enter a unique Username',
                       labelText: 'Username',
@@ -164,9 +228,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.grey.shade200,
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12)),
-                  child: const TextField(
+                  child: TextField(
+                    onChanged: (val) {
+                      setState(() {
+                        password = val;
+                      });
+                    },
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Password',
                       labelText: 'Password',
@@ -183,18 +252,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
               // signin button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Container(
-                  padding: const EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-                      color: Colors.brown.shade600,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: const Center(
-                    child: Text(
-                      'Register',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                child: GestureDetector(
+                  onTap: () {
+                    registerUser(name, username, password, _selectedUserType,
+                        _selectedVehicalType);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                        color: Colors.brown.shade600,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: const Center(
+                      child: Text(
+                        'Register',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
