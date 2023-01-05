@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: 
   flutter_dotenv: ^5.0.2
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

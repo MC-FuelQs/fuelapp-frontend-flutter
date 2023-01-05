@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,6 +21,40 @@ class _LoginScreenState extends State<LoginScreen> {
   // ignore: non_constant_identifier_names
   final _UserType = ['Vehical Owner', 'Filling Station Owner'];
   String _selectedUserType = "";
+
+  String username = "madawa";
+  String password = "123123";
+
+  String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
+
+  authenticateUser(
+      String username, String password, String selectedUserType) async {
+    print("Provided cerd : " + username.toString() + " " + password.toString());
+    var url = '';
+    if (selectedUserType == 'Filling Station Owner') {
+      url = '$API_URL/api/shedown/login';
+    } else if (selectedUserType == 'Vehical Owner') {
+      url = '$API_URL/api/vehiown/login';
+    } else {
+      print('unknown user type');
+    }
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+      },
+      body: jsonEncode(
+          <String, String>{'username': username, 'password': password}),
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      var res_body = json.decode(response.body);
+      print(res_body);
+    } else {
+      print("Failed login");
+    }
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
