@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,6 +27,20 @@ class _LoginScreenState extends State<LoginScreen> {
   String password = "";
 
   String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
+
+  storeUserToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('authToken', token);
+    print('User token stored in SharedPrefs');
+  }
+
+  Future<String?> getUserToken() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final String? token = prefs.getString('authToken');
+    return token;
+  }
 
   authenticateUser(
       String username, String password, String selectedUserType) async {
@@ -50,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
     print(response.statusCode);
     if (response.statusCode == 200) {
       var res_body = json.decode(response.body);
-      print(res_body);
+      storeUserToken(res_body['token']);
     } else {
       print("Failed login");
     }
