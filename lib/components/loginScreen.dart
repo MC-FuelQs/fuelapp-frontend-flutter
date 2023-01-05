@@ -125,8 +125,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.grey.shade200,
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12)),
-                  child: const TextField(
-                    decoration: InputDecoration(
+                  child: TextField(
+                    onChanged: (val) {
+                      setState(() {
+                        username = val;
+                      });
+                    },
+                    decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Enter Your Username',
                         labelText: 'Username',
@@ -146,9 +151,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.grey.shade200,
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12)),
-                  child: const TextField(
+                  child: TextField(
+                    onChanged: (val) {
+                      setState(() {
+                        password = val;
+                      });
+                    },
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Enter your Password',
                       labelText: 'Password',
@@ -165,18 +175,23 @@ class _LoginScreenState extends State<LoginScreen> {
               // signin button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Container(
-                  padding: const EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-                      color: Colors.brown.shade600,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: const Center(
-                    child: Text(
-                      'Sign In',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                child: GestureDetector(
+                  onTap: () {
+                    authenticateUser(username, password, _selectedUserType);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                        color: Colors.brown.shade600,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: const Center(
+                      child: Text(
+                        'Sign In',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
