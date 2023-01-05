@@ -28,6 +28,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
 
+  storeUserName(String username) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('username', username);
+    print('Username stored in SharedPrefs');
+  }
+
   storeUserToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -66,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (response.statusCode == 200) {
       var res_body = json.decode(response.body);
       storeUserToken(res_body['token']);
+      storeUserName(username);
     } else {
       print("Failed login");
     }

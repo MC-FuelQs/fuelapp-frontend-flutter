@@ -15,7 +15,6 @@ class MySheds extends StatefulWidget {
 
 class _MyShedsState extends State<MySheds> {
   String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
-  String username = "madawa";
   var sheds = [];
   bool isShedsLoading = true;
 
@@ -38,6 +37,7 @@ class _MyShedsState extends State<MySheds> {
     });
     print(response.statusCode);
     if (response.statusCode == 200) {
+      final String? username = prefs.getString('username');
       var items = json.decode(response.body);
       setState(() {
         sheds = items.where((c) => c['owner'] == username).toList();
