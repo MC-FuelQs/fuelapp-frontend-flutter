@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:fuel_app/components/stationPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,7 +26,8 @@ class _HomePageState extends State<HomePage> {
                 
                 child: GestureDetector(
                   onTap: () {
-                    print("Button 1 Clicked");
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const StationPage()));
                   },
                   child: Container(
                     padding: const EdgeInsets.all(15),
@@ -66,7 +68,8 @@ class _HomePageState extends State<HomePage> {
                 child: GestureDetector(
                   
                   onTap: () {
-                    print("Button 2 Clicked");
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const StationPage()));
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(20),
@@ -94,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                           ]),
                       child: const Center(
                         child: Text(
-                          "Entered a station",
+                          "Entered to a station",
                           style: TextStyle(
                             color: Colors.brown,
                             fontWeight: FontWeight.bold,
