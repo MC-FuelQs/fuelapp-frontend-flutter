@@ -22,8 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _UserType = ['Vehical Owner', 'Filling Station Owner'];
   String _selectedUserType = "";
 
-  String username = "madawa";
-  String password = "123123";
+  String username = "";
+  String password = "";
 
   String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
 
