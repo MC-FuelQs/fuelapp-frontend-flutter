@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MySheds extends StatefulWidget {
   const MySheds({super.key});
@@ -13,11 +14,6 @@ class MySheds extends StatefulWidget {
 }
 
 class _MyShedsState extends State<MySheds> {
-  // ----- temp
-  String token = dotenv.get('jwttoken',
-      fallback:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaGVkT3duZXJJZCI6IjYzYjVlOWZiM2ViYTRhNjdkN2VjNTY4ZiIsImlhdCI6MTY3Mjg2NjM1OSwiZXhwIjoxNjcyOTUyNzU5fQ.-IWQrFNIGY4Zo-qxYpIUsKj6z6Lw4KvEH-b43XuzHzQ');
-
   String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
   String username = "madawa";
   var sheds = [];
@@ -33,6 +29,8 @@ class _MyShedsState extends State<MySheds> {
   }
 
   fetchSheds() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('authToken');
     var url = '$API_URL/api/shed/list';
     var response = await http.get(Uri.parse(url), headers: {
       HttpHeaders.contentTypeHeader: "application/json",
@@ -52,6 +50,8 @@ class _MyShedsState extends State<MySheds> {
   }
 
   updateShedAvailability(bool status, String shedId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('authToken');
     print(shedId.toString() + " changed to - " + status.toString());
     var url = '$API_URL/api/shed/$shedId';
     var response = await http.put(
