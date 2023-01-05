@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fuel_app/components/homePage.dart';
+import 'package:fuel_app/components/mySheds.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -74,6 +76,13 @@ class _LoginScreenState extends State<LoginScreen> {
       var res_body = json.decode(response.body);
       storeUserToken(res_body['token']);
       storeUserName(username);
+      if (selectedUserType == 'Filling Station Owner') {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const MySheds()));
+      } else if (selectedUserType == 'Vehical Owner') {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage()));
+      }
     } else {
       print("Failed login");
     }
