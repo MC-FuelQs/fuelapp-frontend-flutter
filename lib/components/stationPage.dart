@@ -22,33 +22,12 @@ class StationPage extends StatefulWidget {
 class _StationPageState extends State<StationPage> {
   String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
   List sheds = [];
-  // List testData = [
-  //   {
-  //     "_id": "63b46a5c39685b64f63018d7",
-  //     "owner": "123123123",
-  //     "shedName": "colombo ST",
-  //     "availability": true,
-  //   },
-  //   {
-  //     "_id": "63b5eafc3eba4a67d7ec5696",
-  //     "owner": "madawa",
-  //     "shedName": "Kandy ST",
-  //     "availability": false,
-  //   },
-  //   {
-  //     "_id": "63b5eb273eba4a67d7ec5698",
-  //     "owner": "madawa",
-  //     "shedName": "Gohagoda ST",
-  //     "availability": false,
-  //   },
-  // ];
-  bool isShedsLoading = false;
-  String _selectStation = "63b46a5c39685b64f63018d7";
+  String _selectStation = "";
 
   @override
   void initState() {
     super.initState();
-    print("running");
+    print("fetching....");
     _fetchSheds();
   }
 
@@ -82,41 +61,34 @@ class _StationPageState extends State<StationPage> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  child: !isShedsLoading
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                          child: DropdownButtonFormField<String>(
-                            hint: const Text('Select a Station'),
-                            value: _selectStation,
-                            items: sheds.map((item) {
-                              return new DropdownMenuItem(
-                                value: item['_id'].toString(),
-                                child: new Text(
-                                  item['shedName'],
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                _selectStation = newValue.toString();
-                              });
-                            },
-                            icon: const Icon(
-                                Icons.arrow_drop_down_circle_outlined,
-                                color: Colors.brown),
-                            dropdownColor: Colors.brown,
-                            decoration: const InputDecoration(
-                              labelText: "Select a Station",
-                            ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: DropdownButtonFormField<String>(
+                    hint: const Text('Select a Station'),
+                    value: _selectStation,
+                    items: sheds.map((item) {
+                      return new DropdownMenuItem(
+                        value: item['_id'].toString(),
+                        child: new Text(
+                          item['shedName'],
+                          style: const TextStyle(
+                            color: Colors.white,
                           ),
-                        )
-                      : const SizedBox(
-                          width: 0,
                         ),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectStation = newValue.toString();
+                      });
+                    },
+                    icon: const Icon(Icons.arrow_drop_down_circle_outlined,
+                        color: Colors.brown),
+                    dropdownColor: Colors.brown,
+                    decoration: const InputDecoration(
+                      labelText: "Select a Station",
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
