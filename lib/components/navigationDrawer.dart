@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_app/components/addShed.dart';
+import 'package:fuel_app/components/loginScreen.dart';
 import 'package:fuel_app/components/mySheds.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -90,7 +91,9 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
             ListTile(
               leading: const Icon(Icons.logout_rounded),
               title: const Text("Logout"),
-              onTap: () {},
+              onTap: () {
+                logout();
+              },
             )
           ],
         ),
@@ -101,5 +104,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     setState(() {
       username = prefs.getString('username').toString();
     });
+  }
+
+  logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 }
