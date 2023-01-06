@@ -15,17 +15,35 @@ class _FeedState extends State<Feed> {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-          title: Text('Shed Details'),
-          backgroundColor: Colors.brown,
-          centerTitle: true,
-          leading: Icon(Icons.store_outlined)),
+        title: const Text('Shed Details'),
+        backgroundColor: Colors.brown,
+        centerTitle: true,
+        // leading: Icon(Icons.store_outlined)
+      ),
       body: Column(
         children: [
-          FeedHeader(),
-          SizedBox(height: 5,),
-          Feeds(),
-          // SizedBox(height: 5,),
-          // Feeds()
+          const FeedHeader(),
+          const SizedBox(
+            height: 5,
+          ),
+          Feeds(
+              shedName: 'Name',
+              petrolVehicles: 6,
+              dieselVehicles: 7,
+              waitingtimeDiesel: 6,
+              waitingtimePetrol: 7),
+          Feeds(
+              shedName: 'Name',
+              petrolVehicles: 6,
+              dieselVehicles: 7,
+              waitingtimeDiesel: 6,
+              waitingtimePetrol: 7),
+          Feeds(
+              shedName: 'Name',
+              petrolVehicles: 6,
+              dieselVehicles: 7,
+              waitingtimeDiesel: 6,
+              waitingtimePetrol: 7),
         ],
       ),
     );

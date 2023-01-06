@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:fuel_app/components/stationPage.dart';
+import 'package:fuel_app/components/feedPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,12 +15,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Home Page"),
+          title: const Text("Home Page"),
           backgroundColor: Colors.brown,
         ),
         body: Container(
           color: Colors.grey.shade300,
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30),
           child: Column(
             children: [
               Center(
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const StationPage()));
+                      MaterialPageRoute(builder: (context) => const Feed()));
                   },
                   child: Container(
                     padding: const EdgeInsets.all(15),

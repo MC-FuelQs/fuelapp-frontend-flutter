@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
 class Feeds extends StatefulWidget {
-  const Feeds({Key? key}) : super(key: key);
+  String shedName;
+  int petrolVehicles;
+  int dieselVehicles;
+  int waitingtimePetrol;
+  int waitingtimeDiesel;
+
+  Feeds(
+      {Key? key,
+      required this.shedName,
+      required this.petrolVehicles,
+      required this.dieselVehicles,
+      required this.waitingtimeDiesel,
+      required this.waitingtimePetrol})
+      : super(key: key);
 
   @override
   State<Feeds> createState() => _FeedsState();
@@ -9,25 +22,40 @@ class Feeds extends StatefulWidget {
 
 class _FeedsState extends State<Feeds> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getFeedData();
+  }
+
+  _getFeedData() async {}
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
             child: Container(
               height: 70,
-              decoration: BoxDecoration(
-                  borderRadius:
-                  BorderRadius.only(bottomLeft: Radius.circular(20), topLeft: Radius.circular(20)),
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      topLeft: Radius.circular(20)),
                   color: Colors.purpleAccent),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(width: 10,),
-                  Icon(Icons.noise_aware),
-                  SizedBox(width: 10,),
-                  Text('Kurulegala IOC')
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Icon(Icons.noise_aware),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(widget.shedName)
                 ],
               ),
             ),
@@ -38,7 +66,7 @@ class _FeedsState extends State<Feeds> {
             width: 70,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Text('10')],
+              children: [Text('${widget.petrolVehicles}')],
             ),
           ),
           Container(
@@ -47,26 +75,24 @@ class _FeedsState extends State<Feeds> {
               width: 70,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [Text('5')],
+                children: [Text('${widget.dieselVehicles}')],
               )),
           Container(
               height: 70,
               width: 70,
-              decoration: BoxDecoration(
-                  borderRadius:
-                  BorderRadius.only(bottomRight: Radius.circular(20), topRight: Radius.circular(20)),
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                      topRight: Radius.circular(20)),
                   color: Colors.purpleAccent),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // children: [
-                //   Icon(Icons.timelapse_outlined),
-                //   Text('Waiting')],
                 children: [
                   Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
+                        children: const [
                           Icon(Icons.car_repair),
                           Icon(Icons.fire_truck_sharp),
                         ],
@@ -74,8 +100,8 @@ class _FeedsState extends State<Feeds> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text('2'),
-                          Text('3')
+                          Text('${widget.waitingtimePetrol}'),
+                          Text('${widget.waitingtimeDiesel}')
                         ],
                       )
                     ],
