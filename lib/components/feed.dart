@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_app/components/widgets/feedHeader.dart';
+import 'package:fuel_app/components/widgets/feeds.dart';
 
 class Feed extends StatefulWidget {
   const Feed({Key? key}) : super(key: key);
@@ -21,6 +22,10 @@ class _FeedState extends State<Feed> {
       body: Column(
         children: [
           FeedHeader(),
+          SizedBox(height: 5,),
+          Feeds(),
+          SizedBox(height: 5,),
+          Feeds()
         ],
       ),
     );

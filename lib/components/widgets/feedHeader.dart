@@ -18,7 +18,9 @@ class FeedHeader extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                SizedBox(width: 10,),
                 Icon(Icons.warehouse_outlined),
+                SizedBox(width: 10,),
                 Text('Fuel Station')
               ],
             ),
