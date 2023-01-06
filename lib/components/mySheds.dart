@@ -110,7 +110,7 @@ class _MyShedsState extends State<MySheds> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const NavigationDrawer(),
+      drawer: const NavigationDrawerFuelOwner(),
       appBar: AppBar(
         title: const Text("My Sheds"),
         backgroundColor: Colors.brown,

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_app/components/addShed.dart';
+import 'package:fuel_app/components/feedPage.dart';
+import 'package:fuel_app/components/homePage.dart';
 import 'package:fuel_app/components/loginScreen.dart';
-import 'package:fuel_app/components/mySheds.dart';
+import 'package:fuel_app/components/stationPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NavigationDrawerFuelOwner extends StatefulWidget {
-  const NavigationDrawerFuelOwner({super.key});
+class NavigationDrawerVehicleOwner extends StatefulWidget {
+  const NavigationDrawerVehicleOwner({super.key});
 
   @override
-  State<NavigationDrawerFuelOwner> createState() =>
-      _NavigationDrawerFuelOwnerState();
+  State<NavigationDrawerVehicleOwner> createState() =>
+      _NavigationDrawerVehicleOwnerState();
 }
 
-class _NavigationDrawerFuelOwnerState extends State<NavigationDrawerFuelOwner> {
+class _NavigationDrawerVehicleOwnerState
+    extends State<NavigationDrawerVehicleOwner> {
   var username = 'tempName';
   @override
   void initState() {
@@ -53,7 +55,7 @@ class _NavigationDrawerFuelOwnerState extends State<NavigationDrawerFuelOwner> {
             style: TextStyle(color: Colors.brown.shade900, fontSize: 24),
           ),
           Text(
-            'Shed Owner',
+            'Vehicle Owner',
             style: TextStyle(color: Colors.brown.shade600, fontSize: 16),
           ),
           const SizedBox(
@@ -74,16 +76,25 @@ class _NavigationDrawerFuelOwnerState extends State<NavigationDrawerFuelOwner> {
               title: const Text("Home"),
               onTap: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const MySheds()));
+                    MaterialPageRoute(builder: (context) => const HomePage()));
               },
             ),
             ListTile(
               leading: const Icon(Icons.local_gas_station),
-              title: const Text("Add New Shed"),
+              title: const Text("All Stations"),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const AddShed()));
+                    MaterialPageRoute(builder: (context) => const Feed()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.timer),
+              title: const Text("Enter New Update"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const StationPage()));
               },
             ),
             const Divider(
@@ -110,6 +121,7 @@ class _NavigationDrawerFuelOwnerState extends State<NavigationDrawerFuelOwner> {
   logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const LoginScreen()));
   }

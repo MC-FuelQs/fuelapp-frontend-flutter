@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_app/components/stationPage.dart';
 import 'package:fuel_app/components/feedPage.dart';
+import 'package:fuel_app/components/widgets/navigationDrawerVehicleOwner.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: NavigationDrawerVehicleOwner(),
         appBar: AppBar(
           title: const Text("Home Page"),
           backgroundColor: Colors.brown,
