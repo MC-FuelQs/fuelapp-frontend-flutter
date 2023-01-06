@@ -77,7 +77,13 @@ class _LoginScreenState extends State<LoginScreen> {
       var res_body = json.decode(response.body);
       storeUserToken(res_body['token']);
       storeUserName(username);
-      loginSuccessDialog(selectedUserType);
+      if (selectedUserType == 'Filling Station Owner') {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const MySheds()));
+      } else if (selectedUserType == 'Vehical Owner') {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage()));
+      }
     } else {
       print("Failed login");
       loginFailedDialog();
@@ -276,39 +282,6 @@ class _LoginScreenState extends State<LoginScreen> {
               child: const Text('Okay'),
               onPressed: () {
                 Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> loginSuccessDialog(selectedUserType) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Login Success'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Press okay to continue'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Okay'),
-              onPressed: () {
-                if (selectedUserType == 'Filling Station Owner') {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const MySheds()));
-                } else if (selectedUserType == 'Vehical Owner') {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const HomePage()));
-                }
               },
             ),
           ],
