@@ -150,27 +150,15 @@ class _FeedState extends State<Feed> {
       ),
       backgroundColor: Colors.brown.shade100,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: getBody(),
       ),
+      // body: Column(
+      //   children: [
+      //     const FeedHeader(),
+      //     getBody(),
+      //   ],
+      // ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: Colors.grey,
-  //     appBar: AppBar(
-  //       title: const Text('Shed Details'),
-  //       backgroundColor: Colors.brown,
-  //       centerTitle: true,
-  //       // leading: Icon(Icons.store_outlined)
-  //     ),
-  //     body: Column(
-  //       children: [
-  //         const FeedHeader(),
-  //       ],
-  //     ),
-  //   );
-  // }
 }
