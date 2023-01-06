@@ -139,7 +139,8 @@ class _FeedState extends State<Feed> {
               petrolVehicles: sheds[index]['petrolVehicleCount'],
               dieselVehicles: sheds[index]['dieselVehicleCount'],
               waitingtimeDiesel: sheds[index]['averageWaitingTimeDiesel'],
-              waitingtimePetrol: sheds[index]['averageWaitingTimePetrol']);
+              waitingtimePetrol: sheds[index]['averageWaitingTimePetrol'],
+              availability: sheds[index]['availability']);
         });
   }
 
@@ -149,6 +150,7 @@ class _FeedState extends State<Feed> {
       appBar: AppBar(
         title: const Text("Shed Details"),
         backgroundColor: Colors.brown,
+        centerTitle: true,
       ),
       backgroundColor: Colors.brown.shade100,
       body: SingleChildScrollView(

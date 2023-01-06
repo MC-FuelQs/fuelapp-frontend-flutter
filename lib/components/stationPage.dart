@@ -29,6 +29,7 @@ class _StationPageState extends State<StationPage> {
   int leftTime = 0;
   bool joinedToQueue = false;
   bool leftQueue = false;
+  bool isFilled = false;
   String feedId = '';
 
   @override
@@ -81,7 +82,7 @@ class _StationPageState extends State<StationPage> {
     }
   }
 
-  leaveQueue(String feedId, int leftTime) async {
+  leaveQueue(String feedId, int leftTime, bool isFilled) async {
     final prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('authToken');
 
@@ -94,6 +95,7 @@ class _StationPageState extends State<StationPage> {
       },
       body: jsonEncode(<String, String>{
         'departTime': leftTime.toString(),
+        'isFilled': isFilled.toString(),
       }),
     );
     // ignore: avoid_print
@@ -106,6 +108,7 @@ class _StationPageState extends State<StationPage> {
           title: const Text("Station"),
           backgroundColor: Colors.brown.shade600,
           leading: Icon(Icons.local_gas_station_outlined),
+          centerTitle: true,
         ),
         body: Container(
           color: Colors.brown.shade200,
@@ -193,7 +196,7 @@ class _StationPageState extends State<StationPage> {
                         child: Container(
                           padding: const EdgeInsets.all(20.0),
                           decoration: BoxDecoration(
-                              color: Colors.brown.shade600,
+                              color: Colors.green.shade800,
                               borderRadius: BorderRadius.circular(12)),
                           child: const Center(
                             child: Text(
@@ -241,22 +244,32 @@ class _StationPageState extends State<StationPage> {
                                 leftQueue = true;
                                 leftTime =
                                     DateTime.now().millisecondsSinceEpoch;
-                                leaveQueue(feedId, leftTime);
+                                leaveQueue(feedId, leftTime, isFilled);
                               });
                             },
                             child: Container(
                               padding: const EdgeInsets.all(20.0),
                               decoration: BoxDecoration(
-                                  color: Colors.brown.shade600,
+                                  color: Colors.red.shade800,
                                   borderRadius: BorderRadius.circular(12)),
-                              child: const Center(
-                                child: Text(
-                                  'Exit Before Pump',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    'Exit Before Pump',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(
+                                    Icons.sentiment_dissatisfied_outlined,
+                                    color: Colors.white,
+                                  )
+                                ],
                               ),
                             ),
                           ),
@@ -270,24 +283,35 @@ class _StationPageState extends State<StationPage> {
                             onTap: () {
                               setState(() {
                                 leftQueue = true;
+                                isFilled = true;
                                 leftTime =
                                     DateTime.now().millisecondsSinceEpoch;
-                                leaveQueue(feedId, leftTime);
+                                leaveQueue(feedId, leftTime, isFilled);
                               });
                             },
                             child: Container(
                               padding: const EdgeInsets.all(20.0),
                               decoration: BoxDecoration(
-                                  color: Colors.brown.shade600,
+                                  color: Colors.green.shade800,
                                   borderRadius: BorderRadius.circular(12)),
-                              child: const Center(
-                                child: Text(
-                                  'Exit After Pump',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    'Exit After Pump',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(
+                                    Icons.sentiment_satisfied_alt_outlined,
+                                    color: Colors.white,
+                                  )
+                                ],
                               ),
                             ),
                           ),
@@ -343,7 +367,7 @@ class _StationPageState extends State<StationPage> {
                       child: Container(
                         padding: const EdgeInsets.all(20.0),
                         decoration: BoxDecoration(
-                            color: Colors.brown.shade600,
+                            color: Colors.blue.shade600,
                             borderRadius: BorderRadius.circular(12)),
                         child: const Center(
                           child: Text(

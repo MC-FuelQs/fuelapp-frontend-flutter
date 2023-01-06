@@ -116,6 +116,7 @@ class _MyShedsState extends State<MySheds> {
       appBar: AppBar(
         title: const Text("My Sheds"),
         backgroundColor: Colors.brown,
+        centerTitle: true,
       ),
       backgroundColor: Colors.brown.shade100,
       body: Padding(
