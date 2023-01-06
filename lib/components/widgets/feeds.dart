@@ -35,7 +35,7 @@ class _FeedsState extends State<Feeds> {
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       topLeft: Radius.circular(20)),
-                  color: Colors.purpleAccent),
+                  color: Colors.white),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -52,21 +52,21 @@ class _FeedsState extends State<Feeds> {
             ),
           ),
           Container(
-            color: Colors.blueAccent,
+            color: Colors.yellowAccent.shade100,
             height: 80,
             width: 50,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Text('${widget.petrolVehicles}')],
+              children: [Text('Petrol'), Text('${widget.petrolVehicles}')],
             ),
           ),
           Container(
-              color: Colors.pinkAccent,
+              color: Colors.orangeAccent.shade100,
               height: 80,
               width: 50,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [Text('${widget.dieselVehicles}')],
+                children: [Text('Diesel'),Text('${widget.dieselVehicles}')],
               )),
           Container(
               height: 80,
@@ -75,7 +75,7 @@ class _FeedsState extends State<Feeds> {
                   borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(20),
                       topRight: Radius.circular(20)),
-                  color: Colors.purpleAccent),
+                  color: Colors.white),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
