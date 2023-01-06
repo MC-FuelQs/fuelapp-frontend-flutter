@@ -11,52 +11,61 @@ class FeedHeader extends StatelessWidget {
         Expanded(
           child: Container(
             height: 70,
-            decoration: const BoxDecoration(
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(20)),
-                color: Colors.purpleAccent),
+            color: Colors.brown.shade500,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: const [
                 SizedBox(
                   width: 10,
                 ),
-                Icon(Icons.warehouse_outlined),
+                Icon(Icons.warehouse_outlined, color: Colors.white,),
                 SizedBox(
                   width: 10,
                 ),
-                Text('Fuel Station')
+                Text(
+                  'Fuel Station',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                )
               ],
             ),
           ),
         ),
         Container(
-          color: Colors.blueAccent,
+          color: Colors.yellowAccent.shade100,
           height: 70,
-          width: 70,
+          width: 50,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [Icon(Icons.car_repair), Text('Petorl')],
+            children: const [
+              Icon(Icons.car_repair),
+              Text('Petorl' , style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('Queue', style: TextStyle(fontWeight: FontWeight.bold))
+            ],
           ),
         ),
         Container(
-            color: Colors.pinkAccent,
+            color: Colors.orangeAccent.shade100,
             height: 70,
-            width: 70,
+            width: 50,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [Icon(Icons.fire_truck_sharp), Text('Desel')],
+              children: const [
+                Icon(Icons.fire_truck_sharp),
+                Text('Desel', style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('Queue', style: TextStyle(fontWeight: FontWeight.bold))
+              ],
             )),
         Container(
             height: 70,
-            width: 70,
-            decoration: const BoxDecoration(
-                borderRadius:
-                    BorderRadius.only(bottomRight: Radius.circular(20)),
-                color: Colors.purpleAccent),
+            width: 100,
+            color: Colors.brown.shade500,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [Icon(Icons.timelapse_outlined), Text('Waiting')],
+              children: const [
+                Icon(Icons.timelapse_outlined, color: Colors.white),
+                Text('Waiting', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                Text('Time', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white))
+              ],
             ))
       ],
     );

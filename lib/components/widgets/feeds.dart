@@ -57,7 +57,7 @@ class _FeedsState extends State<Feeds> {
             width: 50,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Text('Petrol'), Text('${widget.petrolVehicles}')],
+              children: [Text('${widget.petrolVehicles}')],
             ),
           ),
           Container(
@@ -66,7 +66,7 @@ class _FeedsState extends State<Feeds> {
               width: 50,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [Text('Diesel'),Text('${widget.dieselVehicles}')],
+                children: [Text('${widget.dieselVehicles}')],
               )),
           Container(
               height: 80,
