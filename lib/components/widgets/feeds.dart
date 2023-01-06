@@ -22,15 +22,6 @@ class Feeds extends StatefulWidget {
 
 class _FeedsState extends State<Feeds> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getFeedData();
-  }
-
-  _getFeedData() async {}
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),

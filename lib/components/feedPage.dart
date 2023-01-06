@@ -11,6 +11,15 @@ class Feed extends StatefulWidget {
 
 class _FeedState extends State<Feed> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getFeedData();
+  }
+
+  _getFeedData() async {}
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey,
