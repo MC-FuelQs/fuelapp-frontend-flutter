@@ -30,7 +30,7 @@ class _FeedsState extends State<Feeds> {
         children: [
           Expanded(
             child: Container(
-              height: 70,
+              height: 80,
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
@@ -53,8 +53,8 @@ class _FeedsState extends State<Feeds> {
           ),
           Container(
             color: Colors.blueAccent,
-            height: 70,
-            width: 70,
+            height: 80,
+            width: 50,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [Text('${widget.petrolVehicles}')],
@@ -62,15 +62,15 @@ class _FeedsState extends State<Feeds> {
           ),
           Container(
               color: Colors.pinkAccent,
-              height: 70,
-              width: 70,
+              height: 80,
+              width: 50,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [Text('${widget.dieselVehicles}')],
               )),
           Container(
-              height: 70,
-              width: 70,
+              height: 80,
+              width: 80,
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(20),
@@ -83,16 +83,16 @@ class _FeedsState extends State<Feeds> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
+                        children: [
                           Icon(Icons.car_repair),
-                          Icon(Icons.fire_truck_sharp),
+                          Text('${widget.waitingtimePetrol} min')
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text('${widget.waitingtimePetrol}'),
-                          Text('${widget.waitingtimeDiesel}')
+                          Icon(Icons.fire_truck_sharp),
+                          Text('${widget.waitingtimeDiesel} min')
                         ],
                       )
                     ],
