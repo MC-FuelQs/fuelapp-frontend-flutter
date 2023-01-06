@@ -56,6 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
       String username, String password, String selectedUserType) async {
     print("Provided cerd : " + username.toString() + " " + password.toString());
     var url = '';
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
     if (selectedUserType == 'Filling Station Owner') {
       url = '$API_URL/api/shedown/login';
     } else if (selectedUserType == 'Vehical Owner') {
@@ -64,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print('unknown user type');
     }
 
-    var response = await http.post(
+    final response = await http.post(
       Uri.parse(url),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
@@ -75,17 +78,16 @@ class _LoginScreenState extends State<LoginScreen> {
     print(response.statusCode);
     if (response.statusCode == 200) {
       var res_body = json.decode(response.body);
-      storeUserToken(res_body['token']).then(() {
-        storeUserName(username).then(() {
-          if (selectedUserType == 'Filling Station Owner') {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const MySheds()));
-          } else if (selectedUserType == 'Vehical Owner') {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const HomePage()));
-          }
-        });
-      });
+      storeUserToken(res_body['token']);
+      storeUserName(username);
+      final savedToken = getUserToken();
+      if (selectedUserType == 'Filling Station Owner') {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const MySheds()));
+      } else if (selectedUserType == 'Vehical Owner') {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage()));
+      }
     } else {
       print("Failed login");
       loginFailedDialog();

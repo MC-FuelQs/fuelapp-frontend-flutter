@@ -34,6 +34,7 @@ class _MyShedsState extends State<MySheds> {
     });
     final prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('authToken');
+    print(token);
     var url = '$API_URL/api/shed/list';
     var response = await http.get(Uri.parse(url), headers: {
       HttpHeaders.contentTypeHeader: "application/json",
