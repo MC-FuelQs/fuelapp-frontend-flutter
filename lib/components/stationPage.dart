@@ -335,8 +335,9 @@ class _StationPageState extends State<StationPage> {
                   ? GestureDetector(
                       onTap: () {
                         setState(() {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const HomePage()));
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()));
                         });
                       },
                       child: Container(
@@ -355,7 +356,7 @@ class _StationPageState extends State<StationPage> {
                         ),
                       ),
                     )
-                  : SizedBox(
+                  : const SizedBox(
                       height: 0,
                     ),
             )
