@@ -199,35 +199,57 @@ class _StationPageState extends State<StationPage> {
             ),
             Container(
               child: !joinedToQueue
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          joinedTime = DateTime.now().millisecondsSinceEpoch;
-                          setState(() {
-                            joinedToQueue = true;
-                          });
-                          joinQueue(_selectedStation, _selectedVehicleType,
-                              joinedTime);
-                          print("Joined to queue");
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(20.0),
-                          decoration: BoxDecoration(
-                              color: Colors.green.shade800,
-                              borderRadius: BorderRadius.circular(12)),
-                          child: const Center(
-                            child: Text(
-                              'Join the queue',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
+                  ? Container(
+                      child: isShedsLoading
+                          ? Padding(
+                              padding: const EdgeInsets.all(25.0),
+                              child: Container(
+                                padding: const EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.brown.shade200,
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: const Center(
+                                  child: Text(
+                                    'Join the queue',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 25.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  joinedTime =
+                                      DateTime.now().millisecondsSinceEpoch;
+                                  setState(() {
+                                    joinedToQueue = true;
+                                  });
+                                  joinQueue(_selectedStation,
+                                      _selectedVehicleType, joinedTime);
+                                  print("Joined to queue");
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(20.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.green.shade800,
+                                      borderRadius: BorderRadius.circular(12)),
+                                  child: const Center(
+                                    child: Text(
+                                      'Join the queue',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ))
                   : Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Container(
