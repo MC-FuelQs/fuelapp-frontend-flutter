@@ -75,15 +75,17 @@ class _LoginScreenState extends State<LoginScreen> {
     print(response.statusCode);
     if (response.statusCode == 200) {
       var res_body = json.decode(response.body);
-      storeUserToken(res_body['token']);
-      storeUserName(username);
-      if (selectedUserType == 'Filling Station Owner') {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const MySheds()));
-      } else if (selectedUserType == 'Vehical Owner') {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomePage()));
-      }
+      storeUserToken(res_body['token']).then(() {
+        storeUserName(username).then(() {
+          if (selectedUserType == 'Filling Station Owner') {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const MySheds()));
+          } else if (selectedUserType == 'Vehical Owner') {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const HomePage()));
+          }
+        });
+      });
     } else {
       print("Failed login");
       loginFailedDialog();
