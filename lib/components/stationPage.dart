@@ -266,7 +266,7 @@ class _StationPageState extends State<StationPage> {
                                     width: 10,
                                   ),
                                   Icon(
-                                    Icons.sentiment_satisfied_alt_outlined,
+                                    Icons.sentiment_dissatisfied_outlined,
                                     color: Colors.white,
                                   )
                                 ],
@@ -308,7 +308,7 @@ class _StationPageState extends State<StationPage> {
                                     width: 10,
                                   ),
                                   Icon(
-                                    Icons.sentiment_dissatisfied_outlined,
+                                    Icons.sentiment_satisfied_alt_outlined,
                                     color: Colors.white,
                                   )
                                 ],
