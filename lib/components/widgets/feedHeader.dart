@@ -11,16 +11,20 @@ class FeedHeader extends StatelessWidget {
         Expanded(
           child: Container(
             height: 70,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 borderRadius:
-                BorderRadius.only(bottomLeft: Radius.circular(20)),
+                    BorderRadius.only(bottomLeft: Radius.circular(20)),
                 color: Colors.purpleAccent),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width: 10,),
+              children: const [
+                SizedBox(
+                  width: 10,
+                ),
                 Icon(Icons.warehouse_outlined),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Text('Fuel Station')
               ],
             ),
@@ -32,7 +36,7 @@ class FeedHeader extends StatelessWidget {
           width: 70,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [Icon(Icons.car_repair), Text('Petorl')],
+            children: const [Icon(Icons.car_repair), Text('Petorl')],
           ),
         ),
         Container(
@@ -41,21 +45,20 @@ class FeedHeader extends StatelessWidget {
             width: 70,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Icon(Icons.fire_truck_sharp), Text('Desel')],
+              children: const [Icon(Icons.fire_truck_sharp), Text('Desel')],
             )),
         Container(
             height: 70,
             width: 70,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 borderRadius:
-                BorderRadius.only(bottomRight: Radius.circular(20)),
+                    BorderRadius.only(bottomRight: Radius.circular(20)),
                 color: Colors.purpleAccent),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Icon(Icons.timelapse_outlined), Text('Waiting')],
+              children: const [Icon(Icons.timelapse_outlined), Text('Waiting')],
             ))
       ],
     );
   }
 }
-
