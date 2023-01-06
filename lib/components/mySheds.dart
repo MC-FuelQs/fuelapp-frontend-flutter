@@ -51,6 +51,7 @@ class _MyShedsState extends State<MySheds> {
       setState(() {
         sheds = [];
         isShedsLoading = false;
+        loadShedFailedDialog();
       });
     }
   }
@@ -159,6 +160,34 @@ class _MyShedsState extends State<MySheds> {
               child: const Text('Okay'),
               onPressed: () {
                 Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> loadShedFailedDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Failed to load Station List'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Please try again'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const MySheds()));
               },
             ),
           ],
