@@ -89,7 +89,9 @@ class _MyShedsState extends State<MySheds> {
                 color: Colors.amber.shade800,
                 borderRadius: BorderRadius.circular(60 / 2)),
           ),
-          Text(shedName),
+          SizedBox(
+            width: 200,
+            child: Text(shedName)),
           Switch(
             onChanged: (bool status) {
               setState(() {
