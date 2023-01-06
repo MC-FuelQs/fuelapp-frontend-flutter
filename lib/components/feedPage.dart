@@ -73,6 +73,14 @@ class _FeedState extends State<Feed> {
                 fullWaitingTimePetrol += fullWaitingTimePetrol + waitingTime;
               }
               if (feed['shedName'] == shed['_id'] &&
+                  feed['type'] == 'Petrol' &&
+                  feed['isWaiting']) {
+                int currentTime = DateTime.now().millisecondsSinceEpoch;
+                int arrivalTime = feed['arrivalTime'];
+                int waitingTime = currentTime - arrivalTime;
+                fullWaitingTimePetrol += fullWaitingTimePetrol + waitingTime;
+              }
+              if (feed['shedName'] == shed['_id'] &&
                   feed['type'] == 'Diesel' &&
                   feed['isWaiting']) {
                 countVehicleDiesel++;
@@ -85,6 +93,14 @@ class _FeedState extends State<Feed> {
                 int waitingTime = leftTime - arrivalTime;
                 fullWaitingTimeDiesel += fullWaitingTimeDiesel + waitingTime;
               }
+              if (feed['shedName'] == shed['_id'] &&
+                  feed['type'] == 'Diesel' &&
+                  feed['isWaiting']) {
+                int currentTime = DateTime.now().millisecondsSinceEpoch;
+                int arrivalTime = feed['arrivalTime'];
+                int waitingTime = currentTime - arrivalTime;
+                fullWaitingTimeDiesel += fullWaitingTimeDiesel + waitingTime;
+              }
             });
             double AWTPetrol = 0;
             if (countVehiclePetrol != 0) {
@@ -94,8 +110,10 @@ class _FeedState extends State<Feed> {
             if (countVehicleDiesel != 0) {
               AWTDiesel = fullWaitingTimeDiesel / countVehicleDiesel;
             } else {}
-            sheds[index]['averageWaitingTimePetrol'] = AWTPetrol.toInt();
-            sheds[index]['averageWaitingTimeDiesel'] = AWTDiesel.toInt();
+            sheds[index]['averageWaitingTimePetrol'] =
+                (AWTPetrol / 60000).toInt();
+            sheds[index]['averageWaitingTimeDiesel'] =
+                (AWTDiesel / 60000).toInt();
             sheds[index]['petrolVehicleCount'] = countVehicleDiesel;
             sheds[index]['dieselVehicleCount'] = countVehiclePetrol;
           });
