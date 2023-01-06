@@ -17,23 +17,25 @@ class _SplashState extends State<Splash> {
 @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: Container(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SizedBox(
-            width: 300,            
-            child: Image.asset('assets/fuel-gauge-png-fuel-1680.png')
-            ),
-          const SizedBox(
-            child: Text(
-              "Fuel App",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+      splash: SingleChildScrollView(
+        child: Container(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(
+              width: 200,
+              child: Image.asset('assets/fuel-gauge-png-fuel-1680.png')
               ),
-            ),
-          )
-        ]),
+            const SizedBox(
+              child: Text(
+                "Fuel App",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ]),
+        ),
       ),
       //'assets/fuel-gauge-png-fuel-1680.jpg',
       nextScreen: LoginScreen(),
