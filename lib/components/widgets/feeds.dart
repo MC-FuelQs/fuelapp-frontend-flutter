@@ -26,7 +26,7 @@ class _FeedsState extends State<Feeds> {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
             child: Container(
@@ -70,7 +70,7 @@ class _FeedsState extends State<Feeds> {
               )),
           Container(
               height: 80,
-              width: 80,
+              width: 100,
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(20),

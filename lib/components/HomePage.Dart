@@ -22,13 +22,13 @@ class _HomePageState extends State<HomePage> {
           color: Colors.grey.shade300,
           padding: const EdgeInsets.all(30),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Center(
-                
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Feed()));
+                        MaterialPageRoute(builder: (context) => const Feed()));
                   },
                   child: Container(
                     padding: const EdgeInsets.all(15),
@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> {
                             spreadRadius: 1,
                             blurRadius: 8,
                             offset: Offset(4, 4),
-                    
                           ),
                           BoxShadow(
                             color: Colors.white,
@@ -67,10 +66,9 @@ class _HomePageState extends State<HomePage> {
               ),
               Center(
                 child: GestureDetector(
-                  
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const StationPage()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const StationPage()));
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(20),
@@ -80,7 +78,6 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                           color: Colors.grey.shade300,
                           borderRadius: BorderRadius.circular(15),
-                          
                           boxShadow: const [
                             BoxShadow(
                               color: Colors.brown,
@@ -93,7 +90,6 @@ class _HomePageState extends State<HomePage> {
                               spreadRadius: 2,
                               blurRadius: 8,
                               offset: Offset(-4, -4),
-                              
                             )
                           ]),
                       child: const Center(
@@ -111,7 +107,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ],
-            
           ),
         ));
   }
