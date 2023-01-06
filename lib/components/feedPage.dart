@@ -20,6 +20,7 @@ class _FeedState extends State<Feed> {
   String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
   List sheds = [];
   List feed = [];
+  bool isLoadingData = false;
 
   @override
   void initState() {
@@ -30,6 +31,7 @@ class _FeedState extends State<Feed> {
   }
 
   fetchSheds() async {
+    isLoadingData = true;
     final prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('authToken');
     var url = '$API_URL/api/shed/list';
@@ -115,20 +117,30 @@ class _FeedState extends State<Feed> {
             sheds[index]['petrolVehicleCount'] = countVehicleDiesel;
             sheds[index]['dieselVehicleCount'] = countVehiclePetrol;
           });
+          isLoadingData = false;
         });
       } else {
         setState(() {
           feed = [];
+          isLoadingData = false;
         });
       }
     } else {
       setState(() {
         sheds = [];
+        isLoadingData = false;
       });
     }
   }
 
   Widget getBody() {
+    if (isLoadingData) {
+      return const Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.brown),
+        ),
+      );
+    }
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
