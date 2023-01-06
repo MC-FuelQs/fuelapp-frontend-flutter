@@ -64,6 +64,7 @@ class _MyShedsState extends State<MySheds> {
       body: jsonEncode(<String, bool>{'availability': status}),
     );
   }
+
   //-----
 
   Widget getBody() {
@@ -79,6 +80,7 @@ class _MyShedsState extends State<MySheds> {
     return Card(
       child: ListTile(
           title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
             width: 20,
