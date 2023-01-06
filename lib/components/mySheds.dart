@@ -186,8 +186,7 @@ class _MyShedsState extends State<MySheds> {
             TextButton(
               child: const Text('Okay'),
               onPressed: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const MySheds()));
+                Navigator.of(context).pop();
               },
             ),
           ],
