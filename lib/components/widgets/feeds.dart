@@ -6,15 +6,17 @@ class Feeds extends StatefulWidget {
   int dieselVehicles;
   int waitingtimePetrol;
   int waitingtimeDiesel;
+  bool availability;
 
-  Feeds(
-      {Key? key,
-      required this.shedName,
-      required this.petrolVehicles,
-      required this.dieselVehicles,
-      required this.waitingtimeDiesel,
-      required this.waitingtimePetrol})
-      : super(key: key);
+  Feeds({
+    Key? key,
+    required this.shedName,
+    required this.petrolVehicles,
+    required this.dieselVehicles,
+    required this.waitingtimeDiesel,
+    required this.waitingtimePetrol,
+    required this.availability,
+  }) : super(key: key);
 
   @override
   State<Feeds> createState() => _FeedsState();
@@ -46,7 +48,27 @@ class _FeedsState extends State<Feeds> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text(widget.shedName)
+                  Text(widget.shedName),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    child: widget.availability
+                        ? Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                                color: Colors.green.shade600,
+                                borderRadius: BorderRadius.circular(60 / 2)),
+                          )
+                        : Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                                color: Colors.red.shade600,
+                                borderRadius: BorderRadius.circular(60 / 2)),
+                          ),
+                  )
                 ],
               ),
             ),
