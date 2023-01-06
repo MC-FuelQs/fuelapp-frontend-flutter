@@ -5,6 +5,8 @@ import 'package:fuel_app/components/mySheds.dart';
 import 'package:fuel_app/components/registerScreen.dart';
 import 'package:fuel_app/components/homePage.dart';
 
+import 'components/feed.dart';
+
 Future<void> main() async {
   await dotenv.load();
 
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: Feed(),
     );
   }
 }
