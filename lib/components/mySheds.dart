@@ -17,7 +17,7 @@ class MySheds extends StatefulWidget {
 class _MyShedsState extends State<MySheds> {
   String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
   var sheds = [];
-  bool isShedsLoading = true;
+  bool isShedsLoading = false;
 
   //-----fetching data
 
@@ -29,6 +29,9 @@ class _MyShedsState extends State<MySheds> {
   }
 
   fetchSheds() async {
+    setState(() {
+      isShedsLoading = true;
+    });
     final prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('authToken');
     var url = '$API_URL/api/shed/list';
@@ -42,10 +45,12 @@ class _MyShedsState extends State<MySheds> {
       var items = json.decode(response.body);
       setState(() {
         sheds = items.where((c) => c['owner'] == username).toList();
+        isShedsLoading = false;
       });
     } else {
       setState(() {
         sheds = [];
+        isShedsLoading = false;
       });
     }
   }
@@ -53,7 +58,8 @@ class _MyShedsState extends State<MySheds> {
   updateShedAvailability(bool status, String shedId) async {
     final prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('authToken');
-    print(shedId.toString() + " changed to - " + status.toString());
+    // ignore: avoid_print
+    print("$shedId changed to - $status");
     var url = '$API_URL/api/shed/$shedId';
     var response = await http.put(
       Uri.parse(url),
@@ -63,11 +69,21 @@ class _MyShedsState extends State<MySheds> {
       },
       body: jsonEncode(<String, bool>{'availability': status}),
     );
+    if (response.statusCode != 200) {
+      updateShedAvailabilityDialog();
+    }
   }
 
   //-----
 
   Widget getBody() {
+    if (sheds.contains(null) || sheds.isEmpty || isShedsLoading) {
+      return const Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.brown),
+        ),
+      );
+    }
     return ListView.builder(
         itemCount: sheds.length,
         itemBuilder: (context, index) {
@@ -86,12 +102,10 @@ class _MyShedsState extends State<MySheds> {
             width: 20,
             height: 20,
             decoration: BoxDecoration(
-                color: Colors.amber.shade800,
+                color: Colors.blue.shade800,
                 borderRadius: BorderRadius.circular(60 / 2)),
           ),
-          SizedBox(
-            width: 200,
-            child: Text(shedName)),
+          SizedBox(width: 200, child: Text(shedName)),
           Switch(
             onChanged: (bool status) {
               setState(() {
@@ -123,6 +137,33 @@ class _MyShedsState extends State<MySheds> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: getBody(),
       ),
+    );
+  }
+
+  Future<void> updateShedAvailabilityDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Failed to Update'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Please try again'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
