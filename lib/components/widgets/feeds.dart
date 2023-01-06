@@ -44,7 +44,23 @@ class _FeedsState extends State<Feeds> {
                   const SizedBox(
                     width: 10,
                   ),
-                  const Icon(Icons.noise_aware),
+                  Container(
+                    child: widget.availability
+                        ? Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                          color: Colors.green.shade600,
+                          borderRadius: BorderRadius.circular(60 / 2)),
+                    )
+                        : Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                          color: Colors.red.shade600,
+                          borderRadius: BorderRadius.circular(60 / 2)),
+                    ),
+                  ),
                   const SizedBox(
                     width: 10,
                   ),
@@ -52,23 +68,6 @@ class _FeedsState extends State<Feeds> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    child: widget.availability
-                        ? Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                                color: Colors.green.shade600,
-                                borderRadius: BorderRadius.circular(60 / 2)),
-                          )
-                        : Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                                color: Colors.red.shade600,
-                                borderRadius: BorderRadius.circular(60 / 2)),
-                          ),
-                  )
                 ],
               ),
             ),
