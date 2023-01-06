@@ -4,14 +4,15 @@ import 'package:fuel_app/components/loginScreen.dart';
 import 'package:fuel_app/components/mySheds.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NavigationDrawer extends StatefulWidget {
-  const NavigationDrawer({super.key});
+class NavigationDrawerFuelOwner extends StatefulWidget {
+  const NavigationDrawerFuelOwner({super.key});
 
   @override
-  State<NavigationDrawer> createState() => _NavigationDrawerState();
+  State<NavigationDrawerFuelOwner> createState() =>
+      _NavigationDrawerFuelOwnerState();
 }
 
-class _NavigationDrawerState extends State<NavigationDrawer> {
+class _NavigationDrawerFuelOwnerState extends State<NavigationDrawerFuelOwner> {
   var username = 'tempName';
   @override
   void initState() {

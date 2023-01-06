@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fuel_app/components/navigationDrawer.dart';
+import 'package:fuel_app/components/widgets/navigationDrawerFuelOwner.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -110,7 +110,7 @@ class _MyShedsState extends State<MySheds> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const NavigationDrawer(),
+      drawer: const NavigationDrawerFuelOwner(),
       appBar: AppBar(
         title: const Text("My Sheds"),
         backgroundColor: Colors.brown,
