@@ -24,8 +24,8 @@ class _FeedState extends State<Feed> {
           FeedHeader(),
           SizedBox(height: 5,),
           Feeds(),
-          SizedBox(height: 5,),
-          Feeds()
+          // SizedBox(height: 5,),
+          // Feeds()
         ],
       ),
     );
