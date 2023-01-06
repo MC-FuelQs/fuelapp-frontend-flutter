@@ -1,6 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fuel_app/components/widgets/feedHeader.dart';
 import 'package:fuel_app/components/widgets/feeds.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Feed extends StatefulWidget {
   const Feed({Key? key}) : super(key: key);
@@ -10,51 +16,145 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
+  // ignore: non_constant_identifier_names
+  String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
+  List sheds = [];
+  List feed = [];
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _getFeedData();
+    // ignore: avoid_print
+    print('fetching...');
+    fetchSheds();
   }
 
-  _getFeedData() async {}
+  fetchSheds() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('authToken');
+    var url = '$API_URL/api/shed/list';
+    var response = await http.get(Uri.parse(url), headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token"
+    });
+    print('shed status : ${response.statusCode}');
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      sheds = items;
+      var url = '$API_URL/api/feed/list';
+      var response_feed = await http.get(Uri.parse(url), headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token"
+      });
+      print('Feed status : ${response_feed.statusCode}');
+      if (response_feed.statusCode == 200) {
+        var items_feed = json.decode(response_feed.body);
+        setState(() {
+          feed = items_feed;
+          // print(feed);
+
+          sheds.asMap().forEach((index, shed) {
+            int countVehiclePetrol = 0;
+            int countVehicleDiesel = 0;
+            int fullWaitingTimePetrol = 0;
+            int fullWaitingTimeDiesel = 0;
+            feed.asMap().forEach((index, feed) {
+              if (feed['shedName'] == shed['_id'] &&
+                  feed['type'] == 'Petrol' &&
+                  feed['isWaiting']) {
+                countVehiclePetrol++;
+              }
+              if (feed['shedName'] == shed['_id'] &&
+                  feed['type'] == 'Petrol' &&
+                  !feed['isWaiting']) {
+                int arrivalTime = feed['arrivalTime'];
+                int leftTime = feed['departTime'];
+                int waitingTime = leftTime - arrivalTime;
+                fullWaitingTimePetrol += fullWaitingTimePetrol + waitingTime;
+              }
+              if (feed['shedName'] == shed['_id'] &&
+                  feed['type'] == 'Diesel' &&
+                  feed['isWaiting']) {
+                countVehicleDiesel++;
+              }
+              if (feed['shedName'] == shed['_id'] &&
+                  feed['type'] == 'Diesel' &&
+                  !feed['isWaiting']) {
+                int arrivalTime = feed['arrivalTime'];
+                int leftTime = feed['departTime'];
+                int waitingTime = leftTime - arrivalTime;
+                fullWaitingTimeDiesel += fullWaitingTimeDiesel + waitingTime;
+              }
+            });
+            double AWTPetrol = 0;
+            if (countVehiclePetrol != 0) {
+              AWTPetrol = fullWaitingTimePetrol / countVehiclePetrol;
+            } else {}
+            double AWTDiesel = 0;
+            if (countVehicleDiesel != 0) {
+              AWTDiesel = fullWaitingTimeDiesel / countVehicleDiesel;
+            } else {}
+            sheds[index]['averageWaitingTimePetrol'] = AWTPetrol.toInt();
+            sheds[index]['averageWaitingTimeDiesel'] = AWTDiesel.toInt();
+            sheds[index]['petrolVehicleCount'] = countVehicleDiesel;
+            sheds[index]['dieselVehicleCount'] = countVehiclePetrol;
+          });
+        });
+      } else {
+        setState(() {
+          feed = [];
+        });
+      }
+    } else {
+      setState(() {
+        sheds = [];
+      });
+    }
+  }
+
+  Widget getBody() {
+    return ListView.builder(
+        itemCount: sheds.length,
+        itemBuilder: (context, index) {
+          return Feeds(
+              shedName: sheds[index]['shedName'],
+              petrolVehicles: sheds[index]['petrolVehicleCount'],
+              dieselVehicles: sheds[index]['dieselVehicleCount'],
+              waitingtimeDiesel: sheds[index]['averageWaitingTimeDiesel'],
+              waitingtimePetrol: sheds[index]['averageWaitingTimePetrol']);
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: const Text('Shed Details'),
+        title: const Text("Shed Details"),
         backgroundColor: Colors.brown,
-        centerTitle: true,
-        // leading: Icon(Icons.store_outlined)
       ),
-      body: Column(
-        children: [
-          const FeedHeader(),
-          const SizedBox(
-            height: 5,
-          ),
-          Feeds(
-              shedName: 'Name',
-              petrolVehicles: 6,
-              dieselVehicles: 7,
-              waitingtimeDiesel: 6,
-              waitingtimePetrol: 7),
-          Feeds(
-              shedName: 'Name',
-              petrolVehicles: 6,
-              dieselVehicles: 7,
-              waitingtimeDiesel: 6,
-              waitingtimePetrol: 7),
-          Feeds(
-              shedName: 'Name',
-              petrolVehicles: 6,
-              dieselVehicles: 7,
-              waitingtimeDiesel: 6,
-              waitingtimePetrol: 7),
-        ],
+      backgroundColor: Colors.brown.shade100,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: getBody(),
       ),
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     backgroundColor: Colors.grey,
+  //     appBar: AppBar(
+  //       title: const Text('Shed Details'),
+  //       backgroundColor: Colors.brown,
+  //       centerTitle: true,
+  //       // leading: Icon(Icons.store_outlined)
+  //     ),
+  //     body: Column(
+  //       children: [
+  //         const FeedHeader(),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
