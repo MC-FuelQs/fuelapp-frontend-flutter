@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fuel_app/components/mySheds.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -40,6 +41,11 @@ class _AddShedState extends State<AddShed> {
       body: jsonEncode(<String, String>{'owner': owner, 'shedName': shedName}),
     );
     print(response.statusCode);
+    if (response.statusCode == 200) {
+      shedAddingSuccessDialog();
+    } else {
+      shedAddingFailedDialog();
+    }
   }
 
   @override
@@ -87,7 +93,6 @@ class _AddShedState extends State<AddShed> {
                   child: GestureDetector(
                     onTap: () {
                       addNewShed(username, shedName);
-                      Navigator.pop(context);
                     },
                     child: Container(
                       padding: const EdgeInsets.all(20.0),
@@ -119,5 +124,60 @@ class _AddShedState extends State<AddShed> {
     setState(() {
       username = prefs.getString('username').toString();
     });
+  }
+
+  Future<void> shedAddingFailedDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Failed to Add'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Please try again'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> shedAddingSuccessDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Successfully added'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Press okay to continue'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const MySheds()));
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
