@@ -79,10 +79,25 @@ class _MyShedsState extends State<MySheds> {
   //-----
 
   Widget getBody() {
-    if (sheds.contains(null) || sheds.isEmpty || isShedsLoading) {
+    if (sheds.contains(null) || isShedsLoading) {
       return const Center(
         child: CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(Colors.brown),
+        ),
+      );
+    }
+    if (!isShedsLoading && sheds.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+          color: Colors.brown.shade200,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Please Add Sheds from the menu.'),
+            ],
+          ),
         ),
       );
     }
