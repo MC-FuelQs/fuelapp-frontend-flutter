@@ -105,6 +105,7 @@ class _StationPageState extends State<StationPage> {
         appBar: AppBar(
           title: const Text("Station"),
           backgroundColor: Colors.brown.shade600,
+          leading: Icon(Icons.local_gas_station_outlined),
         ),
         body: Container(
           color: Colors.brown.shade200,
@@ -328,6 +329,36 @@ class _StationPageState extends State<StationPage> {
                             ),
                     ),
             ),
+            Container(
+              padding: const EdgeInsets.all(25.0),
+              child: !joinedToQueue || leftQueue
+                  ? GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const HomePage()));
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                            color: Colors.brown.shade600,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: const Center(
+                          child: Text(
+                            'Back To Home',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox(
+                      height: 0,
+                    ),
+            )
           ]),
         ));
   }
