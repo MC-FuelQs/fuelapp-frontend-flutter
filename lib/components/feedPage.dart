@@ -130,6 +130,8 @@ class _FeedState extends State<Feed> {
 
   Widget getBody() {
     return ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
         itemCount: sheds.length,
         itemBuilder: (context, index) {
           return Feeds(
@@ -149,16 +151,12 @@ class _FeedState extends State<Feed> {
         backgroundColor: Colors.brown,
       ),
       backgroundColor: Colors.brown.shade100,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-        child: getBody(),
+      body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
+        child: Column(
+          children: <Widget>[const FeedHeader(), getBody()],
+        ),
       ),
-      // body: Column(
-      //   children: [
-      //     const FeedHeader(),
-      //     getBody(),
-      //   ],
-      // ),
     );
   }
 }
