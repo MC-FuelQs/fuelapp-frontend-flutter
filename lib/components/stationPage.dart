@@ -22,6 +22,7 @@ class StationPage extends StatefulWidget {
 class _StationPageState extends State<StationPage> {
   String API_URL = dotenv.get('API_URL', fallback: 'http://localhost:3000');
   List sheds = [];
+  bool isShedsLoading = false;
   String _selectedStation = "";
   String _selectedVehicleType = "Petrol";
   List vehicalTypes = ["Petrol", "Diesel"];
@@ -40,6 +41,9 @@ class _StationPageState extends State<StationPage> {
   }
 
   _fetchSheds() async {
+    setState(() {
+      isShedsLoading = true;
+    });
     final prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('authToken');
     var url = '$API_URL/api/shed/list';
@@ -49,10 +53,15 @@ class _StationPageState extends State<StationPage> {
     }).then((response) {
       print(response.statusCode);
       var data = json.decode(response.body);
-      setState(() {
-        sheds = data;
-        _selectedStation = data[0]['_id'];
-      });
+      if (response.statusCode == 200) {
+        setState(() {
+          sheds = data;
+          _selectedStation = data[0]['_id'];
+          isShedsLoading = false;
+        });
+      } else {
+        loadShedFailedDialog();
+      }
     });
   }
 
@@ -115,6 +124,15 @@ class _StationPageState extends State<StationPage> {
           padding: const EdgeInsets.all(30),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
               Widget>[
+            Container(
+              child: isShedsLoading
+                  ? const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.brown),
+                    )
+                  : const SizedBox(
+                      height: 0,
+                    ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: DropdownButtonFormField<String>(
@@ -386,5 +404,33 @@ class _StationPageState extends State<StationPage> {
             )
           ]),
         ));
+  }
+
+  Future<void> loadShedFailedDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Failed to load Station List'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Please try again'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const StationPage()));
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
