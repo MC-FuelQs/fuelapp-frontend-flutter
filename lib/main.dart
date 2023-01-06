@@ -5,6 +5,7 @@ import 'package:fuel_app/components/loginScreen.dart';
 import 'package:fuel_app/components/mySheds.dart';
 import 'package:fuel_app/components/registerScreen.dart';
 import 'package:fuel_app/components/homePage.dart';
+import 'Routes/routes_generator.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Splash(),
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
