@@ -106,6 +106,7 @@ class _StationPageState extends State<StationPage> {
           title: const Text("Station"),
           backgroundColor: Colors.brown.shade600,
           leading: Icon(Icons.local_gas_station_outlined),
+          centerTitle: true,
         ),
         body: Container(
           color: Colors.brown.shade200,

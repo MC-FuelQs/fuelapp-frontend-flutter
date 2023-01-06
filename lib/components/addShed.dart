@@ -48,6 +48,7 @@ class _AddShedState extends State<AddShed> {
       appBar: AppBar(
         title: const Text('Add New Shed'),
         backgroundColor: Colors.brown,
+        centerTitle: true,
       ),
       body: Container(
         child: SafeArea(

@@ -149,6 +149,7 @@ class _FeedState extends State<Feed> {
       appBar: AppBar(
         title: const Text("Shed Details"),
         backgroundColor: Colors.brown,
+        centerTitle: true,
       ),
       backgroundColor: Colors.brown.shade100,
       body: SingleChildScrollView(
