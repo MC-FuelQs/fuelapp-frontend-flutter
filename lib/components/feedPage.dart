@@ -55,7 +55,9 @@ class _FeedState extends State<Feed> {
 
           sheds.asMap().forEach((index, shed) {
             int countVehiclePetrol = 0;
+            int countAllVehiclePetrol = 0;
             int countVehicleDiesel = 0;
+            int countAllVehicleDiesel = 0;
             int fullWaitingTimePetrol = 0;
             int fullWaitingTimeDiesel = 0;
             feed.asMap().forEach((index, feed) {
@@ -63,52 +65,48 @@ class _FeedState extends State<Feed> {
                   feed['type'] == 'Petrol' &&
                   feed['isWaiting']) {
                 countVehiclePetrol++;
-              }
-              if (feed['shedName'] == shed['_id'] &&
-                  feed['type'] == 'Petrol' &&
-                  !feed['isWaiting']) {
+                countAllVehiclePetrol++;
+                int currentTime = DateTime.now().millisecondsSinceEpoch;
                 int arrivalTime = feed['arrivalTime'];
-                int leftTime = feed['departTime'];
-                int waitingTime = leftTime - arrivalTime;
+                int waitingTime = currentTime - arrivalTime;
                 fullWaitingTimePetrol += fullWaitingTimePetrol + waitingTime;
               }
               if (feed['shedName'] == shed['_id'] &&
                   feed['type'] == 'Petrol' &&
-                  feed['isWaiting']) {
-                int currentTime = DateTime.now().millisecondsSinceEpoch;
+                  !feed['isWaiting']) {
+                countAllVehiclePetrol++;
                 int arrivalTime = feed['arrivalTime'];
-                int waitingTime = currentTime - arrivalTime;
+                int leftTime = feed['departTime'];
+                int waitingTime = leftTime - arrivalTime;
                 fullWaitingTimePetrol += fullWaitingTimePetrol + waitingTime;
               }
               if (feed['shedName'] == shed['_id'] &&
                   feed['type'] == 'Diesel' &&
                   feed['isWaiting']) {
                 countVehicleDiesel++;
-              }
-              if (feed['shedName'] == shed['_id'] &&
-                  feed['type'] == 'Diesel' &&
-                  !feed['isWaiting']) {
-                int arrivalTime = feed['arrivalTime'];
-                int leftTime = feed['departTime'];
-                int waitingTime = leftTime - arrivalTime;
-                fullWaitingTimeDiesel += fullWaitingTimeDiesel + waitingTime;
-              }
-              if (feed['shedName'] == shed['_id'] &&
-                  feed['type'] == 'Diesel' &&
-                  feed['isWaiting']) {
+                countAllVehicleDiesel++;
                 int currentTime = DateTime.now().millisecondsSinceEpoch;
                 int arrivalTime = feed['arrivalTime'];
                 int waitingTime = currentTime - arrivalTime;
                 fullWaitingTimeDiesel += fullWaitingTimeDiesel + waitingTime;
               }
+              if (feed['shedName'] == shed['_id'] &&
+                  feed['type'] == 'Diesel' &&
+                  !feed['isWaiting']) {
+                countAllVehicleDiesel++;
+                int arrivalTime = feed['arrivalTime'];
+                int leftTime = feed['departTime'];
+                int waitingTime = leftTime - arrivalTime;
+                fullWaitingTimeDiesel += fullWaitingTimeDiesel + waitingTime;
+              }
             });
             double AWTPetrol = 0;
-            if (countVehiclePetrol != 0) {
-              AWTPetrol = fullWaitingTimePetrol / countVehiclePetrol;
+            if (countAllVehiclePetrol != 0) {
+              AWTPetrol = fullWaitingTimePetrol / countAllVehiclePetrol;
             } else {}
             double AWTDiesel = 0;
-            if (countVehicleDiesel != 0) {
-              AWTDiesel = fullWaitingTimeDiesel / countVehicleDiesel;
+            if (countAllVehicleDiesel != 0) {
+              AWTDiesel = fullWaitingTimeDiesel / countAllVehicleDiesel;
             } else {}
             sheds[index]['averageWaitingTimePetrol'] =
                 (AWTPetrol / 60000).toInt();
